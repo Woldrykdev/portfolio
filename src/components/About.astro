@@ -1,0 +1,106 @@
+---
+import { FadeInUp } from "./MotionWrapper.jsx";
+---
+
+<section id="about" class="max-w-6xl mx-auto py-20 px-6 text-center">
+    <FadeInUp client:load>
+      <h2 class="text-3xl font-bold mb-10">
+        About <span class="text-[#a855f7]">Me</span>
+      </h2>
+    </FadeInUp>
+  
+    <FadeInUp delay={0.2} client:load>
+      <p class="max-w-2xl mx-auto text-gray-400 mb-8 leading-relaxed">
+        I'm a web designer and developer passionate about building
+        clean, modern, and impactful digital experiences.
+        I enjoy working on both <span class="text-[#a855f7] font-semibold">frontend</span>
+        and <span class="text-[#a855f7] font-semibold">backend</span>,
+        blending design with logic to create unique projects.
+      </p>
+    </FadeInUp>
+  
+    <FadeInUp delay={0.4} client:load>
+      <div class="flex flex-wrap justify-center gap-6 mt-12">
+        <!-- React -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duration-300 cursor-pointer">
+            <img src="/logos/react.svg" alt="React" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            React
+          </div>
+        </div>
+        
+        <!-- JavaScript -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duration-300 cursor-pointer">
+            <img src="/logos/javascript.svg" alt="JavaScript" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            JavaScript
+          </div>
+        </div>
+        
+        <!-- HTML -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duration-300 cursor-pointer">
+            <img src="/logos/html5.svg" alt="HTML" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            HTML
+          </div>
+        </div>
+        
+        <!-- CSS -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duration-300 cursor-pointer">
+            <img src="/logos/css3.svg" alt="CSS" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            CSS
+          </div>
+        </div>
+        
+        <!-- TypeScript -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duration-300 cursor-pointer">
+            <img src="/logos/typescript.svg" alt="TypeScript" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            TypeScript
+          </div>
+        </div>
+        
+        <!-- Tailwind -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duration-300 cursor-pointer">
+            <img src="/logos/tailwindcss.svg" alt="Tailwind CSS" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Tailwind CSS
+          </div>
+        </div>
+        
+        <!-- Astro -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duration-300 cursor-pointer">
+            <img src="/logos/astro.svg" alt="Astro" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Astro
+          </div>
+        </div>
+        
+        <!-- Figma -->
+        <div class="group relative">
+          <div class="p-4 rounded-xl bg-[#1a1a1d] hover:bg-[#a855f7]/10 transition-all duración-300 cursor-pointer">
+            <img src="/logos/figma.svg" alt="Figma" class="w-10 h-10" />
+          </div>
+          <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-[#a855f7] text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Figma
+          </div>
+        </div>
+      </div>
+    </FadeInUp>
+  </section>
+  

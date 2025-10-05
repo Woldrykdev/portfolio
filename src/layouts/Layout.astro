@@ -1,22 +1,19 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+const { title = "Portfolio | Woldryk", description = "Portfolio personal de diseño y desarrollo web" } = Astro.props;
+import Particles from "../components/Particles.jsx";
+---
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+	<link rel="stylesheet" href="/src/styles/global.css" />
+	<link rel="icon" type="image/png" href="/Logo.png" />
+  </head>
+  <body class="bg-[#0e0e10] text-gray-200 font-sans">
+    <Particles client:load color="#a855f7" density={0.00012} speed={0.45} />
+    <slot />
+  </body>
+</html>

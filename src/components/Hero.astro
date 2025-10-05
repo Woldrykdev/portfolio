@@ -1,0 +1,29 @@
+---
+import { FadeInUp } from "./MotionWrapper.jsx";
+---
+
+<section class="min-h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
+
+  <FadeInUp delay={0.1} client:load>
+    <h1 class="text-5xl md:text-7xl font-extrabold mb-4">
+      Hi, I'm <span class="text-[#a855f7]">WoldrykDev</span>
+    </h1>
+  </FadeInUp>
+
+  <FadeInUp delay={0.3} client:load>
+    <p class="text-lg md:text-xl max-w-xl mb-6">
+      Web Designer & Developer — crafting modern, engaging digital experiences.
+    </p>
+  </FadeInUp>
+
+  <FadeInUp delay={0.5} client:load>
+    <div class="space-x-4">
+      <a href="#projects" class="px-6 py-3 bg-[#a855f7] rounded-xl shadow-lg hover:shadow-[#a855f7]/50 transition font-semibold">
+        View Projects
+      </a>
+      <a href="#contact" class="px-6 py-3 border border-[#a855f7] rounded-xl hover:bg-[#a855f7]/10 transition font-semibold">
+        Contact Me
+      </a>
+    </div>
+  </FadeInUp>
+</section>

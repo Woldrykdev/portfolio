@@ -1,0 +1,81 @@
+---
+import { FadeInUp } from "./MotionWrapper.jsx";
+---
+
+<section id="contact" class="max-w-4xl mx-auto py-20 px-6 text-center">
+    <FadeInUp client:load>
+      <h2 class="text-3xl font-bold mb-10">
+        Let's <span class="text-[#a855f7]">Work</span> Together
+      </h2>
+    </FadeInUp>
+  
+    <FadeInUp delay={0.2} client:load>
+      <form id="contact-form" class="space-y-6 max-w-xl mx-auto">
+        <input 
+          type="text" 
+          name="discord" 
+          placeholder="Your Discord (e.g. woldrykdev)" 
+          required
+          class="w-full p-4 rounded-lg bg-[#1a1a1d] border border-[#a855f7]/30 focus:border-[#a855f7] outline-none transition-colors"
+        />
+    
+        <textarea 
+          name="message" 
+          rows="5" 
+          placeholder="Your message"
+          required
+          class="w-full p-4 rounded-lg bg-[#1a1a1d] border border-[#a855f7]/30 focus:border-[#a855f7] outline-none transition-colors"
+        ></textarea>
+
+        <input type="text" name="hp" style="display:none" tabindex="-1" autocomplete="off" />
+    
+        <button 
+          type="submit"
+          class="px-6 py-3 bg-[#a855f7] rounded-xl shadow-lg hover:shadow-[#a855f7]/50 transition-all font-semibold w-full hover:scale-105"
+        >
+          Send Message
+        </button>
+        <div data-status class="text-sm text-gray-400"></div>
+      </form>
+    </FadeInUp>
+  
+    <FadeInUp delay={0.4} client:load>
+      <div class="flex justify-center space-x-6 mt-10">
+        <a href="https://github.com/yourusername" target="_blank" class="hover:text-[#a855f7] transition-colors">GitHub</a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" class="hover:text-[#a855f7] transition-colors">LinkedIn</a>
+        <a href="https://behance.net/yourusername" target="_blank" class="hover:text-[#a855f7] transition-colors">Behance</a>
+      </div>
+    </FadeInUp>
+  </section>
+  
+  <script type="module">
+    const form = document.querySelector('#contact-form');
+    const btn = form.querySelector('button[type="submit"]');
+    const statusEl = form.querySelector('[data-status]');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      statusEl.textContent = 'Sending...';
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          statusEl.textContent = 'Message sent! I will reach you on Discord.';
+          form.reset();
+        } else {
+          const { error } = await res.json().catch(() => ({ error: 'Error' }));
+          statusEl.textContent = 'Error: ' + (error || 'Please try again later');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Network error. Try again later.';
+      }
+      btn.disabled = false;
+    });
+  </script>
+  

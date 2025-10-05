@@ -1,0 +1,37 @@
+---
+import { FadeInUp } from "./MotionWrapper.jsx";
+---
+
+<section id="projects" class="max-w-6xl mx-auto py-20 px-6">
+  <FadeInUp client:load>
+    <h2 class="text-3xl font-bold mb-10 text-center">
+      My <span class="text-[#a855f7]">Projects</span>
+    </h2>
+  </FadeInUp>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <FadeInUp delay={0.2} client:load>
+      <div class="bg-[#1a1a1d] rounded-xl p-6 shadow-lg hover:shadow-[#a855f7]/40 transition hover:-translate-y-2 duration-300">
+        <div class="h-40 bg-[#a855f7]/20 rounded-lg mb-4"></div>
+        <h3 class="text-xl font-semibold mb-2">Artix</h3>
+        <p class="text-gray-400 text-sm">Main site for Artix.</p>
+      </div>
+    </FadeInUp>
+
+    <FadeInUp delay={0.4} client:load>
+      <div class="bg-[#1a1a1d] rounded-xl p-6 shadow-lg hover:shadow-[#a855f7]/40 transition hover:-translate-y-2 duration-300">
+        <div class="h-40 bg-[#a855f7]/20 rounded-lg mb-4"></div>
+        <h3 class="text-xl font-semibold mb-2">Resurrect</h3>
+        <p class="text-gray-400 text-sm">New website for Resurrect.</p>
+      </div>
+    </FadeInUp>
+
+    <FadeInUp delay={0.6} client:load>
+      <div class="bg-[#1a1a1d] rounded-xl p-6 shadow-lg hover:shadow-[#a855f7]/40 transition hover:-translate-y-2 duration-300">
+        <div class="h-40 bg-[#a855f7]/20 rounded-lg mb-4"></div>
+        <h3 class="text-xl font-semibold mb-2">BoostSupply</h3>
+        <p class="text-gray-400 text-sm">Thank you page for BoostSupply.</p>
+      </div>
+    </FadeInUp>
+  </div>
+</section>

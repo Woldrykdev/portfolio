@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* Scroll suave global */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+/* Transiciones suaves para el body */
+body {
+  transition: opacity 0.3s ease;
+}
+
+/* Transiciones suaves para secciones */
+.transition-section {
+  will-change: opacity, transform;
+  transition: all 0.6s ease;
+}
+
+/* Efectos para secciones al hacer scroll */
+section {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Mejorar el scroll en navegadores webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e0e10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9333ea;
+}
+
+/* Animaciones para enlaces */
+a[href^="#"] {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+a[href^="#"]:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+/* Efecto de ondulación para botones */
+a[href^="#"]:active {
+  transform: scale(0.98);
+}
+
+/* Smooth scroll adicional para mejor compatibilidad */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Asegurar que el contenido esté sobre el fondo animado */
+section {
+  position: relative;
+  z-index: 10;
+}
+
+header {
+  position: relative;
+  z-index: 20;
+}
+
+footer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Mejorar la visibilidad del contenido sobre el fondo */
+body {
+  position: relative;
+}
+
+/* Optimizaciones para el fondo animado */
+.floating-background {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Mejoras de rendimiento */
+@supports (backdrop-filter: blur(1px)) {
+  .backdrop-blur-custom {
+    backdrop-filter: blur(1px);
+  }
+}
+
+/* Reducir movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  .floating-background {
+    animation: none !important;
+    transform: none !important;
+  }
+}
