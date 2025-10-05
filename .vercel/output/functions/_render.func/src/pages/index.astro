@@ -1,0 +1,26 @@
+---
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Projects from '../components/Projects.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import Layout from '../layouts/Layout.astro';
+import { SmoothScroll } from '../components/SmoothScroll.jsx';
+// import { FloatingLanguages } from '../components/FloatingLanguages.jsx';
+// import { SimpleFloat } from '../components/SimpleFloat.jsx';
+// import { FloatingSymbols } from '../components/FloatingSymbols.jsx';
+---
+
+<Layout>
+	{/* <SimpleFloat client:load /> */}
+	{/* <FloatingLanguages client:load /> */}
+	{/* <FloatingSymbols client:load /> */}
+	<SmoothScroll client:load />
+	<Header />
+	<Hero />
+	<Projects />
+	<About />
+	<Contact />
+	<Footer />
+</Layout>
