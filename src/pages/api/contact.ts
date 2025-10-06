@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import type { APIContext } from 'astro';
 import { createClient } from '@supabase/supabase-js';
 
