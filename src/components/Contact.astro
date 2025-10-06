@@ -38,56 +38,49 @@ import { FadeInUp } from '../components/MotionWrapper.jsx';
       <div data-status class="text-sm text-gray-400"></div>
     </form>
   </FadeInUp>
-
-  <FadeInUp delay={0.4} client:load>
-    <div class="flex justify-center space-x-6 mt-10">
-      <a href="https://github.com/woldrykdev" target="_blank" class="hover:text-[#a855f7] transition-colors">GitHub</a>
-      <a href="https://www.linkedin.com/in/esteban-osen-b98002389/" target="_blank" class="hover:text-[#a855f7] transition-colors">LinkedIn</a>
-    </div>
-  </FadeInUp>
 </section>
 
 <script type="module">
-  const form = document.querySelector('#contact-form');
-  const statusEl = form.querySelector('[data-status]');
-  const btn = form.querySelector('button[type="submit"]');
+const form = document.querySelector('#contact-form');
+const statusEl = form.querySelector('[data-status]');
+const btn = form.querySelector('button[type="submit"]');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    btn.disabled = true;
-    statusEl.textContent = 'Sending...';
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  btn.disabled = true;
+  statusEl.textContent = 'Sending...';
 
-    const data = Object.fromEntries(new FormData(form).entries());
+  const data = Object.fromEntries(new FormData(form).entries());
 
-    if (data.hp) {
-      statusEl.textContent = 'Invalid submission.';
-      btn.disabled = false;
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          discord: data.discord?.trim(),
-          message: data.message?.trim()
-        }),
-      });
-
-      const json = await res.json();
-
-      if (res.ok && json.ok) {
-        statusEl.textContent = '✅ Message sent! I will reach you on Discord.';
-        form.reset();
-      } else {
-        statusEl.textContent = `⚠️ ${json.error || 'Invalid input'}`;
-      }
-    } catch (err) {
-      console.error(err);
-      statusEl.textContent = '❌ Network error. Try again later.';
-    }
-
+  if (data.hp) {
+    statusEl.textContent = 'Invalid submission.';
     btn.disabled = false;
-  });
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        discord: data.discord?.trim(),
+        message: data.message?.trim()
+      }),
+    });
+
+    const json = await res.json();
+
+    if (res.ok && json.ok) {
+      statusEl.textContent = '✅ Message sent! I will reach you on Discord.';
+      form.reset();
+    } else {
+      statusEl.textContent = `⚠️ ${json.error || 'Invalid input'}`;
+    }
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = '❌ Network error. Try again later.';
+  }
+
+  btn.disabled = false;
+});
 </script>
