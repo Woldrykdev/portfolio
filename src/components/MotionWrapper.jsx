@@ -13,7 +13,6 @@ export const FadeInUp = ({ children, delay = 0 }) => {
   );
 };
 
-// Componente para animar secciones completas
 export const SectionTransition = ({ children, id }) => {
   return (
     <motion.section
@@ -29,7 +28,6 @@ export const SectionTransition = ({ children, id }) => {
   );
 };
 
-// Componente para fade down effect
 export const FadeDown = ({ children, delay = 0 }) => {
   return (
     <motion.div

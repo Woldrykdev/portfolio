@@ -26,7 +26,6 @@ export default function Particles({ color = "#a855f7", density = 0.00012, speed 
 
     resize();
 
-    // Respectar preferencias de reducir movimiento
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const particleCount = prefersReducedMotion ? 0 : Math.max(20, Math.floor(width * height * density));
 
@@ -55,11 +54,10 @@ export default function Particles({ color = "#a855f7", density = 0.00012, speed 
       ctx.fillStyle = color;
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        // Update
+
         p.x += p.vx;
         p.y += p.vy;
 
-        // Wrap around edges
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
         if (p.y < -10) p.y = height + 10;
@@ -71,7 +69,6 @@ export default function Particles({ color = "#a855f7", density = 0.00012, speed 
         ctx.fill();
       }
 
-      // Líneas sutiles entre partículas cercanas
       ctx.globalAlpha = 0.08;
       ctx.strokeStyle = color;
       for (let i = 0; i < particles.length; i++) {
