@@ -1,30 +1,31 @@
-export const prerender = false;
+import type { APIRoute } from 'astro';
+import { createClient } from '@supabase/supabase-js';
 
-import { db } from '../../server/db/client.ts';
-import { messages } from '../../server/db/schema.ts';
-import { z } from 'zod';
+// Asegurate de que estas variables existan en Vercel:
+const supabaseUrl = import.meta.env.SUPABASE_URL!;
+const supabaseKey = import.meta.env.SUPABASE_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-const ContactSchema = z.object({
-  discord: z.string().trim().min(2).max(37),
-  message: z.string().trim().min(10).max(2000),
-});
-
-export async function POST({ request }: { request: Request }) {
+export const post: APIRoute = async ({ request }) => {
   try {
-    const body = await request.json().catch(() => ({}));
-    const parsed = ContactSchema.safeParse(body);
+    const data = await request.json();
+    const { discord, message } = data;
 
-    if (!parsed.success) {
-      return new Response(JSON.stringify({ ok: false, error: 'Invalid input' }), { status: 422 });
+    if (!discord || !message) {
+      return new Response(JSON.stringify({ ok: false, error: 'Missing fields' }), { status: 400 });
     }
 
-    const { discord, message } = parsed.data;
+    const { error } = await supabase
+      .from('messages')
+      .insert([{ discord, message }]);
 
-    await db.insert(messages).values({ discord, message });
+    if (error) {
+      return new Response(JSON.stringify({ ok: false, error: error.message }), { status: 400 });
+    }
 
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
-  } catch (err) {
-    console.error(err);
-    return new Response(JSON.stringify({ ok: false, error: 'Server error' }), { status: 500 });
+    return new Response(JSON.stringify({ ok: true }));
+  } catch (err: any) {
+    console.error('Supabase error:', err);
+    return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500 });
   }
-}
+};
