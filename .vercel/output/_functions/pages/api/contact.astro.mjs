@@ -1,46 +1,30 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { pgTable, timestamp, text, serial } from 'drizzle-orm/pg-core';
-import { z } from 'zod';
+import { createClient } from '@supabase/supabase-js';
 export { renderers } from '../../renderers.mjs';
 
-const sql = postgres(process.env.DATABASE_URL, {
-  ssl: { rejectUnauthorized: false }
-});
-const db = drizzle(sql);
-
-const messages = pgTable("messages", {
-  id: serial("id").primaryKey(),
-  discord: text("discord").notNull(),
-  message: text("message").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
-});
-
-const prerender = false;
-const ContactSchema = z.object({
-  discord: z.string().trim().min(2).max(37),
-  message: z.string().trim().min(10).max(2e3)
-});
-async function POST({ request }) {
+const supabaseUrl = undefined                            ;
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZlZmJ5eG5lY2d4YnFlcG16eXhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk2ODM1NzQsImV4cCI6MjA3NTI1OTU3NH0.NQUn_aIZf11fsUJ_LIY6_BJAuUCLJz-FYFxoDmu8P78";
+const supabase = createClient(supabaseUrl, supabaseKey);
+const post = async ({ request }) => {
   try {
-    const body = await request.json().catch(() => ({}));
-    const parsed = ContactSchema.safeParse(body);
-    if (!parsed.success) {
-      return new Response(JSON.stringify({ ok: false, error: "Invalid input" }), { status: 422 });
+    const data = await request.json();
+    const { discord, message } = data;
+    if (!discord || !message) {
+      return new Response(JSON.stringify({ ok: false, error: "Missing fields" }), { status: 400 });
     }
-    const { discord, message } = parsed.data;
-    await db.insert(messages).values({ discord, message });
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    const { error } = await supabase.from("messages").insert([{ discord, message }]);
+    if (error) {
+      return new Response(JSON.stringify({ ok: false, error: error.message }), { status: 400 });
+    }
+    return new Response(JSON.stringify({ ok: true }));
   } catch (err) {
-    console.error(err);
-    return new Response(JSON.stringify({ ok: false, error: "Server error" }), { status: 500 });
+    console.error("Supabase error:", err);
+    return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500 });
   }
-}
+};
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  POST,
-  prerender
+  post
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const page = () => _page;
