@@ -1,5 +1,5 @@
 ---
-import { FadeInUp } from './MotionWrapper.jsx';
+import { FadeInUp } from '../components/MotionWrapper.jsx';
 ---
 
 <section id="contact" class="max-w-4xl mx-auto py-20 px-6 text-center">
@@ -11,82 +11,44 @@ import { FadeInUp } from './MotionWrapper.jsx';
 
   <FadeInUp delay={0.2} client:load>
     <form id="contact-form" class="space-y-6 max-w-xl mx-auto">
-      <input 
-        type="text" 
-        name="discord" 
-        placeholder="Your Discord (e.g. woldrykdev)" 
-        required
-        class="w-full p-4 rounded-lg bg-[#1a1a1d] border border-[#a855f7]/30 focus:border-[#a855f7] outline-none transition-colors"
-      />
-
-      <textarea 
-        name="message" 
-        rows="5" 
-        placeholder="Your message"
-        required
-        class="w-full p-4 rounded-lg bg-[#1a1a1d] border border-[#a855f7]/30 focus:border-[#a855f7] outline-none transition-colors"
-      ></textarea>
-
+      <input type="text" name="discord" placeholder="Your Discord" required class="w-full p-4 rounded-lg bg-[#1a1a1d] border border-[#a855f7]/30 focus:border-[#a855f7] outline-none" />
+      <textarea name="message" rows="5" placeholder="Your message" required class="w-full p-4 rounded-lg bg-[#1a1a1d] border border-[#a855f7]/30 focus:border-[#a855f7] outline-none"></textarea>
       <input type="text" name="hp" style="display:none" tabindex="-1" autocomplete="off" />
-  
-      <button 
-        type="submit"
-        class="px-6 py-3 bg-[#a855f7] rounded-xl shadow-lg hover:shadow-[#a855f7]/50 transition-all font-semibold w-full hover:scale-105"
-      >
-        Send Message
-      </button>
+      <button type="submit" class="px-6 py-3 bg-[#a855f7] rounded-xl w-full hover:scale-105 transition-all">Send Message</button>
       <div data-status class="text-sm text-gray-400"></div>
     </form>
-  </FadeInUp>
-
-  <FadeInUp delay={0.4} client:load>
-    <div class="flex justify-center space-x-6 mt-10">
-      <a href="https://github.com/woldrykdev" target="_blank" class="hover:text-[#a855f7] transition-colors">GitHub</a>
-      <a href="https://www.linkedin.com/in/esteban-osen-b98002389/" target="_blank" class="hover:text-[#a855f7] transition-colors">LinkedIn</a>
-    </div>
   </FadeInUp>
 </section>
 
 <script type="module">
-  const form = document.querySelector('#contact-form');
-  const statusEl = form.querySelector('[data-status]');
-  const btn = form.querySelector('button[type="submit"]');
+const form = document.querySelector('#contact-form');
+const statusEl = form.querySelector('[data-status]');
+const btn = form.querySelector('button[type="submit"]');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    btn.disabled = true;
-    statusEl.textContent = 'Sending...';
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  btn.disabled = true;
+  statusEl.textContent = 'Sending...';
 
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    if (data.hp) {
-      statusEl.textContent = 'Invalid submission.';
-      btn.disabled = false;
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          discord: data.discord?.trim(),
-          message: data.message?.trim()
-        }),
-      });
-
-      const json = await res.json();
-
-      if (res.ok && json.ok) {
-        statusEl.textContent = '✅ Message sent! I will reach you on Discord.';
-        form.reset();
-      } else {
-        statusEl.textContent = '⚠️ Invalid input — please check your message.';
-      }
-    } catch {
-      statusEl.textContent = '❌ Network error. Try again later.';
-    }
-
+  const data = Object.fromEntries(new FormData(form).entries());
+  if (data.hp) {
+    statusEl.textContent = 'Invalid submission.';
     btn.disabled = false;
-  });
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ discord: data.discord, message: data.message }),
+    });
+    const json = await res.json();
+    statusEl.textContent = res.ok && json.ok ? '✅ Message sent!' : '⚠️ Invalid input';
+    if (res.ok) form.reset();
+  } catch {
+    statusEl.textContent = '❌ Network error.';
+  }
+  btn.disabled = false;
+});
 </script>
