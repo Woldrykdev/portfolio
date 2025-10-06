@@ -1,6 +1,5 @@
 import type { APIContext } from 'astro';
 import { createClient } from '@supabase/supabase-js';
-import 'dotenv/config'; // para que funcione en local
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -13,8 +12,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function post({ request }: APIContext) {
   try {
-    const body = await request.json();
-    const { discord, message } = body;
+    const { discord, message } = await request.json();
 
     if (!discord || !message) {
       return new Response(JSON.stringify({ ok: false, error: 'Missing fields' }), { status: 400 });
@@ -22,7 +20,7 @@ export async function post({ request }: APIContext) {
 
     const { error } = await supabase
       .from('messages')
-      .insert([{ discord, message }]);
+      .insert({ discord, message });
 
     if (error) {
       console.error(error);
@@ -30,8 +28,8 @@ export async function post({ request }: APIContext) {
     }
 
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
-  } catch (err: any) {
+  } catch (err) {
     console.error(err);
-    return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ ok: false, error: 'Internal server error' }), { status: 500 });
   }
 }
