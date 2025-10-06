@@ -14,9 +14,7 @@ export const post: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ ok: false, error: 'Missing fields' }), { status: 400 });
     }
 
-    const { error } = await supabase
-      .from('messages')
-      .insert([{ discord, message }]);
+    const { error } = await supabase.from('messages').insert([{ discord, message }]);
 
     if (error) {
       return new Response(JSON.stringify({ ok: false, error: error.message }), { status: 400 });
