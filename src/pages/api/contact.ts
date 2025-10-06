@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { createClient } from '@supabase/supabase-js';
 
-// Asegurate de que estas variables existan en Vercel:
 const supabaseUrl = import.meta.env.SUPABASE_URL!;
 const supabaseKey = import.meta.env.SUPABASE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
